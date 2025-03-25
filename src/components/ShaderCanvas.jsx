@@ -20,7 +20,7 @@ const fragmentShaderSource = `
     vec2 st = gl_FragCoord.xy / uResolution.xy;
     st.x *= uResolution.x / uResolution.y;
 
-    vec3 color = vec3(1.0);
+    vec3 color = vec3(0);
     float d = 0.0;
 
     st = st * 2.0 - 1.0;
@@ -104,7 +104,7 @@ const ShaderCanvas = () => {
     const render = (time) => {
       time *= 0.002; // Convert to seconds
 
-      gl.clearColor(1.0, 1.0, 1.0, 1.0);
+      gl.clearColor(0, 0, 0, 1.0);
       gl.clear(gl.COLOR_BUFFER_BIT);
 
       gl.useProgram(program);
