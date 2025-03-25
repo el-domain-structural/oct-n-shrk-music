@@ -16,7 +16,7 @@ const fragmentShaderSource = `
     vec2 st = gl_FragCoord.xy / uResolution.xy;
     st.x *= uResolution.x / uResolution.y;
 
-    vec3 color = vec3(0.0);
+    vec3 color = vec3(1.0);
     float d = 0.0;
 
     st = st * 2.0 - 1.0;
@@ -96,14 +96,14 @@ const ShaderCanvas = () => {
     const render = (time) => {
       time *= 0.002; // Convert to seconds
 
-      gl.clearColor(0.0, 0.0, 0.0, 1.0);
+      gl.clearColor(1.0, 1.0, 1.0, 1.0);
       gl.clear(gl.COLOR_BUFFER_BIT);
 
       gl.useProgram(program);
       gl.uniform1f(timeUniformLocation, time);
       gl.uniform2f(resolutionUniformLocation, canvas.width, canvas.height);
 
-      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      //gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
       animationRef.current = requestAnimationFrame(render);
     };
