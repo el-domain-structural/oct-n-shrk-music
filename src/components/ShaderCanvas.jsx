@@ -77,11 +77,11 @@ const ShaderCanvas = () => {
 
     const positionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+    // Updated vertices for a simple triangle
     const positions = [
-      -1.0, 1.0,
-       1.0, -1.0,
-       -1.0,  1.0,
-       -1.0,  -1.0,
+      -1.0,  1.0,  // Top-left
+       1.0, -1.0,  // Bottom-right
+      -1.0, -1.0,  // Bottom-left
     ];
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
 
@@ -110,8 +110,8 @@ const ShaderCanvas = () => {
       gl.useProgram(program);
       gl.uniform1f(timeUniformLocation, time);
       gl.uniform2f(resolutionUniformLocation, canvas.width, canvas.height);
-      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-      
+      gl.drawArrays(gl.TRIANGLES, 0, 3);  // Draw using TRIANGLES
+
       animationRef.current = requestAnimationFrame(render);
     };
 
