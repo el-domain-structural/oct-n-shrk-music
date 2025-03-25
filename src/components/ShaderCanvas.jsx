@@ -12,6 +12,10 @@ const fragmentShaderSource = `
   uniform float uTime;
   uniform vec2 uResolution;
 
+  // Define the two colors
+  const vec3 color1 = vec3(245.0/255.0, 243.0/255.0, 245.0/255.0);  // #F5F3F5
+  const vec3 color2 = vec3(39.0/255.0, 70.0/255.0, 144.0/255.0);  // #274690
+
   void main() {
     vec2 st = gl_FragCoord.xy / uResolution.xy;
     st.x *= uResolution.x / uResolution.y;
@@ -28,11 +32,15 @@ const fragmentShaderSource = `
       d = abs(d);
       d = pow(0.01 / d, 1.2);
       
-      color += vec3(d * 0.3, d * 0.2, d * 1.0);
+      // Use color1 and color2 in the effect
+      color += color1 * d * 0.3;
+      color += color2 * d * 0.7;
+      
       st *= 1.8;
       st = fract(st);
       d = tan(d * 8.0 + (uTime * 0.007)) / 8.0;
-      color += vec3(d * 0.3, d * 0.2, d * 1.0);
+      color += color1 * d * 0.3;
+      color += color2 * d * 0.7;
       st *= 1.7;
       st = fract(st);
     }
@@ -102,8 +110,6 @@ const ShaderCanvas = () => {
       gl.useProgram(program);
       gl.uniform1f(timeUniformLocation, time);
       gl.uniform2f(resolutionUniformLocation, canvas.width, canvas.height);
-
-      //gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
       animationRef.current = requestAnimationFrame(render);
     };
