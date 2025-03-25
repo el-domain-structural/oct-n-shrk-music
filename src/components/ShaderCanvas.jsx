@@ -110,7 +110,8 @@ const ShaderCanvas = () => {
       gl.useProgram(program);
       gl.uniform1f(timeUniformLocation, time);
       gl.uniform2f(resolutionUniformLocation, canvas.width, canvas.height);
-
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      
       animationRef.current = requestAnimationFrame(render);
     };
 
