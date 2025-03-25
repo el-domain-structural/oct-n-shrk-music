@@ -52,10 +52,10 @@ module.exports = {
           foreground: "hsl(var(--card-foreground))",
         },
         cyber: {
-          background: '#0a0a0a',
-          text: '#00ff00',
-          accent: '#ff00ff',
-          secondary: '#0000ff',
+          background: '#F5F3F5',
+          text: '#1B264F',
+          accent: '#576CA8',
+          secondary: '#274690',
         },
       },
       borderRadius: {
