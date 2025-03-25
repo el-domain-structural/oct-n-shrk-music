@@ -18,13 +18,14 @@ const fragmentShaderSource = `
 
   void main() {
     vec2 st = gl_FragCoord.xy / uResolution.xy;
-    st.x *= uResolution.x / uResolution.y;
+    st.x *= uResolution.x / uResolution.y; // Adjust x for aspect ratio
 
     vec3 color = vec3(0);
     float d = 0.0;
 
-    st = st * 2.0 - 1.0;
+    st = st * 2.0 - 1.0; // Normalize to range [-1, 1]
 
+    // Apply the pattern effect
     for (int i = 0; i < 17; i++) {      
       d = length(abs(st) - sin(uTime * 0.003) * 0.5);
       d = sin(d / 6.0 + (uTime * 0.007)) / 7.0;
@@ -32,7 +33,7 @@ const fragmentShaderSource = `
       d = abs(d);
       d = pow(0.01 / d, 1.2);
       
-      // Use color1 and color2 in the effect
+      // Add colors based on the effect
       color += color1 * d * 0.3;
       color += color2 * d * 0.7;
       
@@ -77,12 +78,15 @@ const ShaderCanvas = () => {
 
     const positionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    // Updated vertices for a simple triangle
+
+    // Define 4 vertices for a rectangle
     const positions = [
       -1.0,  1.0,  // Top-left
-       1.0, -1.0,  // Bottom-right
+       1.0,  1.0,  // Top-right
       -1.0, -1.0,  // Bottom-left
+       1.0, -1.0,  // Bottom-right
     ];
+
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
 
     const positionAttributeLocation = gl.getAttribLocation(program, 'aVertexPosition');
@@ -110,7 +114,9 @@ const ShaderCanvas = () => {
       gl.useProgram(program);
       gl.uniform1f(timeUniformLocation, time);
       gl.uniform2f(resolutionUniformLocation, canvas.width, canvas.height);
-      gl.drawArrays(gl.TRIANGLES, 0, 3);  // Draw using TRIANGLES
+      
+      // Use TRIANGLE_STRIP to draw a rectangle
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
       animationRef.current = requestAnimationFrame(render);
     };
